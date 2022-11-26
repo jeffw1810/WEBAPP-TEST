@@ -1,8 +1,5 @@
-import os
-from azure.storage.blob import BlobServiceClient
 from datetime import datetime
 from flask import Flask, request  
-import requests
 app = Flask(__name__)
 
 
