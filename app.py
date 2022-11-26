@@ -6,14 +6,7 @@ import requests
 app = Flask(__name__)
 
 
-connect_str = 'DefaultEndpointsProtocol=https;AccountName=saadstorage223344;AccountKey=M/AKSOBtwvfzwiku44/J4cHEBJgGZU+v8SHJU7Q2xns0WgiNwhnqKuowWCBx8IJDk2VHDs2n7kDL+AStMYJ4ig==;EndpointSuffix=core.windows.net'
-container_name = "mycontainer"
-blob_service_client = BlobServiceClient.from_connection_string(conn_str=connect_str) # create a blob service client to interact with the storage account
-try:
-    container_client = blob_service_client.get_container_client(container=container_name) # get container client to interact with the container in which images will be stored
-    container_client.get_container_properties() # get properties of the container to force exception to be thrown if container does not exist
-except Exception as e:
-    container_client = blob_service_client.create_container(container_name) # create a container in the storage account if it does not exist
+
 
 @app.route("/")
 def fill_form():  
