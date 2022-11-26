@@ -10,3 +10,12 @@ def fill_form():
             <input type="submit" value = "Click Here To Fetch API Data" >  
         </form>   
         ''' 
+
+@app.route("/getdata", methods=["POST"])  
+def api_call():  
+    response = requests.get(f"https://catfact.ninja/fact").json()
+    print(response)
+    now = datetime.now()
+    dt_string = now.strftime("%d/%m/%Y%H:%M:%S")
+    container_client.upload_blob(dt_string, response['fact'])
+    return "<p>Uploaded: {}</p>".format(response) 
