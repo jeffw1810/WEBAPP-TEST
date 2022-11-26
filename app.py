@@ -35,6 +35,3 @@ def api_call():
     container_client.upload_blob(dt_string, response['fact'])
     return "<p>Uploaded: {}</p>".format(response) 
 
-
-if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=8080)
