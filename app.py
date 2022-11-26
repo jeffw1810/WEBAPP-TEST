@@ -1,10 +1,19 @@
-from datetime import datetime
 import os
 from azure.storage.blob import BlobServiceClient
+from datetime import datetime
 from flask import Flask, request  
+import requests
 app = Flask(__name__)
 
 
+connect_str = 'DefaultEndpointsProtocol=https;AccountName=saadstorage223344;AccountKey=9u8jfusS9YBsxrlPxdtoRqnrtOQliV0qKD8j/3io9a4DdsexL3vKl9caFWx8re6jn8PP7410iTXm+AStaXrwSA==;EndpointSuffix=core.windows.net'
+container_name = "mycontainer"
+blob_service_client = BlobServiceClient.from_connection_string(conn_str=connect_str) # create a blob service client to interact with the storage account
+try:
+    container_client = blob_service_client.get_container_client(container=container_name) # get container client to interact with the container in which images will be stored
+    container_client.get_container_properties() # get properties of the container to force exception to be thrown if container does not exist
+except Exception as e:
+    container_client = blob_service_client.create_container(container_name) # create a container in the storage account if it does not exist
 
 
 @app.route("/")
@@ -25,3 +34,7 @@ def api_call():
     dt_string = now.strftime("%d/%m/%Y%H:%M:%S")
     container_client.upload_blob(dt_string, response['fact'])
     return "<p>Uploaded: {}</p>".format(response) 
+
+
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=8080)
